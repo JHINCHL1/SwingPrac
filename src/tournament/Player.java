@@ -7,8 +7,10 @@ public class Player {
     private int skill;
     private int id;
 
-    public Player(int id) {
+    public Player(int id, String firstName, String lastName) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getFirstName() {
@@ -17,6 +19,10 @@ public class Player {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getFullName() {
+        return (firstName + " " + lastName);
     }
 
     public int getSkill() {

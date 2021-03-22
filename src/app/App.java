@@ -6,14 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class App {
     private JButton startTournamentButton;
     private JPanel mainPanel;
     private JLabel playersOut;
     private JComboBox tournamentSizeCB;
+    private JTextPane playerNames;
 
-    private Tournament tournament;
+    private static Tournament tournament;
 
 
     public App() {
@@ -34,7 +36,12 @@ public class App {
                 String tSize = "failed";
                 if (tournamentSizeCB.getSelectedItem().toString() != null) {
                     tSize = tournamentSizeCB.getSelectedItem().toString();
-                    tournament = new Tournament(Integer.parseInt(tSize));
+                    try {
+                        tournament = new Tournament(Integer.parseInt(tSize));
+                        printPlayers();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                     playersOut.setText(tournament.getPlayers());
                 }
                 else {
@@ -56,9 +63,16 @@ public class App {
 
 
         frame.pack();
-        frame.setSize(400,400);
+        frame.setSize(1290,720);
         frame.setVisible(true);
 
+    }
+
+    public void printPlayers(){
+        for (String fullname: tournament.getPlayersFullNames()) {
+            String temp = playerNames.getText();
+            playerNames.setText(temp + ", " + fullname);
+        }
     }
 
 }
